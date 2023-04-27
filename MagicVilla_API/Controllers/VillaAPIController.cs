@@ -105,7 +105,7 @@ namespace MagicVilla_API.Controllers
             return NoContent();
         }
 
-        [HttpPut("id", Name = "UpdatePartialVilla")]
+        [HttpPatch("id", Name = "UpdatePartialVilla")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult UpdatePartialVilla(int id,JsonPatchDocument<VillaDto> patchDto)
