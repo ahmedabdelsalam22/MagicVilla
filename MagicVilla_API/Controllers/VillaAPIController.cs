@@ -2,6 +2,7 @@
 using MagicVilla_API.Models;
 using MagicVilla_API.Models.Dtos;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MagicVilla_API.Controllers
@@ -49,7 +50,7 @@ namespace MagicVilla_API.Controllers
 
             if (VillaStore.VillaList.FirstOrDefault(u => u.Name.ToLower() == villaDto.Name.ToLower()) !=null) 
             {
-                 ModelState.AddModelError("customError","Villa already exists");
+                ModelState.AddModelError("customError","Villa already exists");
                 return BadRequest(ModelState);
             }
             if (villaDto == null)
@@ -66,6 +67,22 @@ namespace MagicVilla_API.Controllers
 
             //return Ok(villaDto);
             return CreatedAtRoute("GetVilla", new {id = villaDto.Id} ,villaDto);
+        }
+
+        [HttpDelete("id",Name ="DeleteVilla")]
+        public IActionResult DeleteVilla(int id) 
+        {
+            if (id == 0) 
+            {
+                return BadRequest();
+            }
+            var villa = VillaStore.VillaList.FirstOrDefault(u=>u.Id == id);
+            if (villa == null) 
+            {
+                return NotFound();
+            }
+            VillaStore.VillaList.Remove(villa);
+            return NoContent();
         }
     }
 }
