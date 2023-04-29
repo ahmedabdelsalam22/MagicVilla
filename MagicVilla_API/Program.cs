@@ -1,5 +1,4 @@
 
-using MagicVilla_API.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Logging.AddConsole();
@@ -15,7 +14,6 @@ builder.Services.AddControllers(opt=>opt.ReturnHttpNotAcceptable=true)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<ILogging, LoggingV2>();
 
 var app = builder.Build();
 
