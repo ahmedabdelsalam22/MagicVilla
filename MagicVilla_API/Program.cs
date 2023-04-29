@@ -14,7 +14,6 @@ builder.Services.AddControllers(opt=>opt.ReturnHttpNotAcceptable=true)
     .AddNewtonsoftJson()
    .AddXmlDataContractSerializerFormatters();
 
-builder.Services.AddDbContext<ApplicationDbContext>(opt=>opt.UseSqlServer(connectionString: connectionString));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
