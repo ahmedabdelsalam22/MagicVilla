@@ -78,7 +78,6 @@ namespace MagicVilla_API.Controllers
             _dbContext.Villas.Add(villa);
             _dbContext.SaveChanges();
 
-            //return Ok(villaDto);
             return CreatedAtRoute("GetVilla", new { id = villa.Id }, villa);
         }
 
