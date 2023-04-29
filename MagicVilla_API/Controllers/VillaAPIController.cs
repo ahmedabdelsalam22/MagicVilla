@@ -65,18 +65,6 @@ namespace MagicVilla_API.Controllers
                 return BadRequest(villaDto);
             }
            
-            Villa villa = new()
-            {
-                Name = villaDto.Name,
-                Details = villaDto.Details,
-                Occupancy = villaDto.Occupancy,
-                Sqft = villaDto.Sqft,
-                Rate = villaDto.Rate,
-                ImageUrl = villaDto.ImageUrl,
-                Amenity = villaDto.Amenity,
-                CreatedDate = villaDto.CreatedDate,
-                UpdatedDate = villaDto.UpdatedDate,
-            };
             await _dbContext.Villas.AddAsync(villa);
             await _dbContext.SaveChangesAsync();
 
@@ -113,19 +101,6 @@ namespace MagicVilla_API.Controllers
                 return BadRequest();
             }
 
-            Villa villa = new()
-            {
-                Id = villaDto.Id,
-                Name = villaDto.Name,
-                Details = villaDto.Details,
-                Occupancy = villaDto.Occupancy,
-                Sqft = villaDto.Sqft,
-                Rate = villaDto.Rate,
-                ImageUrl = villaDto.ImageUrl,
-                Amenity = villaDto.Amenity,
-                CreatedDate = villaDto.CreatedDate,
-                UpdatedDate = villaDto.UpdatedDate,
-            };
              _dbContext.Villas.Update(villa);
            await _dbContext.SaveChangesAsync();
             return NoContent();
