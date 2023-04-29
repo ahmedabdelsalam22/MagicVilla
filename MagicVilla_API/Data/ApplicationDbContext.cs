@@ -75,7 +75,6 @@ namespace MagicVilla_API.Data
                   CreatedDate = DateTime.Now
               });
 
-            base.OnModelCreating(modelBuilder);
         }
     }
 }
