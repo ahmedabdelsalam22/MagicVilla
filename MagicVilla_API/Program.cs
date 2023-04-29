@@ -1,7 +1,9 @@
 
 
+using MagicVilla_API;
 using MagicVilla_API.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -10,6 +12,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(connectionString: connectionString));
 
+builder.Services.AddAutoMapper(typeof(MappingConfig));
 
 builder.Services.AddControllers(opt=>opt.ReturnHttpNotAcceptable=true)
     .AddNewtonsoftJson()

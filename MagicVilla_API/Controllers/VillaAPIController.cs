@@ -21,9 +21,9 @@ namespace MagicVilla_API.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<IEnumerable<VillaDto>> GetVillas()
+        public async Task<ActionResult<IEnumerable<VillaDto>>> GetVillas()
         {
-            var villas = _dbContext.Villas.ToList();
+            var villas = await _dbContext.Villas.ToListAsync();
             return Ok(villas);
         }
 
@@ -32,13 +32,13 @@ namespace MagicVilla_API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public ActionResult<VillaDto> GetVilla(int id)
+        public async Task<ActionResult<VillaDto>> GetVilla(int id)
         {
             if (id == 0)
             {
                 return BadRequest("Id 0 is not allowed!");
             }
-            var villaDto = _dbContext.Villas.FirstOrDefault(v => v.Id == id);
+            var villaDto =await _dbContext.Villas.FirstOrDefaultAsync(v => v.Id == id);
             if (villaDto == null)
             {
                 return NotFound($"No villa found with id: {id}");
@@ -50,10 +50,12 @@ namespace MagicVilla_API.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<VillaDto> CreateVilla([FromBody] VillaCreateDto villaDto)
+        public async Task<ActionResult<VillaDto>> CreateVilla([FromBody] VillaCreateDto villaDto)
         {
-         
-            if (_dbContext.Villas.FirstOrDefault(u => u.Name.ToLower() == villaDto.Name.ToLower()) != null)
+            bool isFound = await _dbContext.Villas.FirstOrDefaultAsync(u => u.Name.ToLower() == villaDto.Name.ToLower()) != null;
+
+
+            if (isFound)
             {
                 ModelState.AddModelError("customError", "Villa already exists");
                 return BadRequest(ModelState);
@@ -75,8 +77,8 @@ namespace MagicVilla_API.Controllers
                 CreatedDate = villaDto.CreatedDate,
                 UpdatedDate = villaDto.UpdatedDate,
             };
-            _dbContext.Villas.Add(villa);
-            _dbContext.SaveChanges();
+            await _dbContext.Villas.AddAsync(villa);
+            await _dbContext.SaveChangesAsync();
 
             return CreatedAtRoute("GetVilla", new { id = villa.Id }, villa);
         }
@@ -85,26 +87,26 @@ namespace MagicVilla_API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult DeleteVilla(int id)
+        public async Task<IActionResult> DeleteVilla(int id)
         {
             if (id == 0)
             {
                 return BadRequest();
             }
-            var villa = _dbContext.Villas.FirstOrDefault(u => u.Id == id);
+            var villa = await _dbContext.Villas.FirstOrDefaultAsync(u => u.Id == id);
             if (villa == null)
             {
                 return NotFound();
             }
             _dbContext.Villas.Remove(villa);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             return NoContent();
         }
 
         [HttpPut("id", Name = "UpdateVilla")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult UpdateVilla(int id, [FromBody] VillaUpdateDto villaDto)
+        public async Task<IActionResult> UpdateVilla(int id, [FromBody] VillaUpdateDto villaDto)
         {
             if (villaDto == null | id != villaDto.Id)
             {
@@ -124,21 +126,21 @@ namespace MagicVilla_API.Controllers
                 CreatedDate = villaDto.CreatedDate,
                 UpdatedDate = villaDto.UpdatedDate,
             };
-            _dbContext.Villas.Update(villa);
-            _dbContext.SaveChanges();
+             _dbContext.Villas.Update(villa);
+           await _dbContext.SaveChangesAsync();
             return NoContent();
         }
 
         [HttpPatch("id", Name = "UpdatePartialVilla")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult UpdatePartialVilla(int id, JsonPatchDocument<VillaUpdateDto> patchDto)
+        public async Task<IActionResult> UpdatePartialVilla(int id, JsonPatchDocument<VillaUpdateDto> patchDto)
         {
             if (patchDto == null || id == 0)
             {
                 return BadRequest();
             }
-            var villa = _dbContext.Villas.AsNoTracking().FirstOrDefault(u => u.Id == id);
+            var villa =await _dbContext.Villas.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
 
             VillaUpdateDto villaDto = new()
             {
@@ -178,7 +180,7 @@ namespace MagicVilla_API.Controllers
                 UpdatedDate = villaDto.UpdatedDate,
             };
             _dbContext.Villas.Update(_villa);
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
             return NoContent();
         }
     }
