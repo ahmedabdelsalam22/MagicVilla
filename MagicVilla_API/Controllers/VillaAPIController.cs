@@ -78,7 +78,6 @@ namespace MagicVilla_API.Controllers
 
             await _repository.CreateAsync(villa);
 
-            return CreatedAtRoute("GetVilla", new { id = villa.Id }, villa);
         }
 
         [HttpDelete("id", Name = "DeleteVilla")]
