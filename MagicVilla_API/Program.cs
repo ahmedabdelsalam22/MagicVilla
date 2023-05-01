@@ -2,6 +2,8 @@
 
 using MagicVilla_API;
 using MagicVilla_API.Data;
+using MagicVilla_API.Repository;
+using MagicVilla_API.Repository.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +20,7 @@ builder.Services.AddControllers(opt=>opt.ReturnHttpNotAcceptable=true)
     .AddNewtonsoftJson()
    .AddXmlDataContractSerializerFormatters();
 
+builder.Services.AddScoped<IVillaRepository, VillaRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
