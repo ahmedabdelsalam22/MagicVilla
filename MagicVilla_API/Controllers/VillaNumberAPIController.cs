@@ -19,11 +19,13 @@ namespace MagicVilla_API.Controllers
         private readonly IVillaNumberRepository _repository;
         private readonly IMapper _Mapper;
         protected APIResponse _response;
-        public VillaNumberAPIController(IVillaNumberRepository repository, IMapper Mapper)
+        private readonly IVillaRepository _villaRepo;
+        public VillaNumberAPIController(IVillaNumberRepository repository, IMapper Mapper, IVillaRepository villaRepo)
         {
             _repository = repository;
             _Mapper = Mapper;
             _response = new();
+            _villaRepo = villaRepo;
         }
 
         [HttpGet]
@@ -96,6 +98,12 @@ namespace MagicVilla_API.Controllers
                     ModelState.AddModelError("customError", "VillaNumber already exists");
                     return BadRequest(ModelState);
                 }
+                //Relation foreign key in VillaNumber and PrimaryKey in Villa
+                if (_villaRepo.GetAsync(u=>u.Id == createDto.VillaId) == null) 
+                {
+                    ModelState.AddModelError("customError", "VillaId Invalid");
+                    return BadRequest(ModelState);
+                }
                 if (createDto == null)
                 {
                     return BadRequest(createDto);
@@ -118,7 +126,7 @@ namespace MagicVilla_API.Controllers
         }
 
         [HttpDelete("id", Name = "DeleteVillaNumber")]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<ActionResult<APIResponse>> DeleteVillaNumber(int id)
@@ -154,9 +162,16 @@ namespace MagicVilla_API.Controllers
         {
             try
             {
+
                 if (updateDto == null | id != updateDto.VillaNo)
                 {
                     return BadRequest();
+                }
+                //Relation foreign key in VillaNumber and PrimaryKey in Villa
+                if (_villaRepo.GetAsync(u => u.Id == updateDto.VillaId) == null)
+                {
+                    ModelState.AddModelError("customError", "VillaId Invalid");
+                    return BadRequest(ModelState);
                 }
                 VillaNumber villaNumber = _Mapper.Map<VillaNumber>(updateDto);
 
