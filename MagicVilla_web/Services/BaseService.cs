@@ -18,8 +18,6 @@ namespace MagicVilla_web.Services
 
         }
 
-        //ovverides methods
-        public APIResponse responseModel { get; set; }
 
         public async Task<T> SendAsync<T>(ApiRequest apiRequest)
         {
