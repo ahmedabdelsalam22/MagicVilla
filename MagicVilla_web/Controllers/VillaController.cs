@@ -4,6 +4,7 @@ using MagicVilla_web.Models.Dtos;
 using MagicVilla_web.Services.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace MagicVilla_web.Controllers
 {
@@ -29,5 +30,27 @@ namespace MagicVilla_web.Controllers
 
             return View(list);
         }
-    }
+
+        public async Task<IActionResult> CreateVilla() 
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+		public async Task<IActionResult> CreateVilla(VillaCreateDto model)
+		{
+            if (ModelState.IsValid) 
+            {
+				var response = await _villaService.CreateAsync<APIResponse>(model);
+				if (response != null && response.IsSuccess)
+				{
+					return RedirectToAction(nameof(IndexVilla));
+				}
+			}
+			return View(model);
+		}
+
+
+	}
 }
