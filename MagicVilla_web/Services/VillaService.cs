@@ -1,4 +1,6 @@
-﻿using MagicVilla_web.Models.Dtos;
+﻿using MagicVilla_Utility;
+using MagicVilla_web.Models;
+using MagicVilla_web.Models.Dtos;
 using MagicVilla_web.Services.IServices;
 
 namespace MagicVilla_web.Services
@@ -15,23 +17,45 @@ namespace MagicVilla_web.Services
 
         public Task<T> GetAllAsync<T>()
         {
-            throw new NotImplementedException();
+            return SendAsync<T>(new ApiRequest()
+            {
+                ApiType = SD.ApiType.GET,
+                Url = villlaUrl + "api/VillaAPI",
+            });
         }
         public Task<T> GetAsync<T>(int id)
         {
-            throw new NotImplementedException();
+            return SendAsync<T>(new ApiRequest()
+            {
+                ApiType = SD.ApiType.GET,
+                Url = villlaUrl + "api/VillaAPI/" + id,
+            });
         }
         public Task<T> CreateAsync<T>(VillaCreateDto dto)
         {
-            throw new NotImplementedException();
+            return SendAsync<T>(new ApiRequest() 
+            {
+                ApiType = SD.ApiType.POST,
+                Url = villlaUrl+ "api/VillaAPI",
+                Data = dto,
+            });
         }
         public Task<T> UpdateAsync<T>(VillaUpdateDto dto)
         {
-            throw new NotImplementedException();
+            return SendAsync<T>(new ApiRequest()
+            {
+                ApiType = SD.ApiType.PUT,
+                Url = villlaUrl + "api/VillaAPI",
+                Data = dto,
+            });
         }
         public Task<T> DeleteAsync<T>(int id)
         {
-            throw new NotImplementedException();
+            return SendAsync<T>(new ApiRequest()
+            {
+                ApiType = SD.ApiType.DELETE,
+                Url = villlaUrl + "api/VillaAPI/"+id,            
+            });
         }
 
     }
