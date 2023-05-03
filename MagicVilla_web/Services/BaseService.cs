@@ -9,7 +9,9 @@ namespace MagicVilla_web.Services
 {
     public class BaseService : IBaseService
     {
+
         public IHttpClientFactory httpClient { get; set; }
+        public APIResponse responseModel { get; set; }
 
         public BaseService(IHttpClientFactory httpClient)
         {
@@ -29,7 +31,7 @@ namespace MagicVilla_web.Services
 
                 message.Headers.Add("Accept", "application/json");
                 message.RequestUri = new Uri(apiRequest.Url);
-                if (apiRequest != null) 
+                if (apiRequest.Data != null) 
                 {
                     message.Content = 
                         new StringContent(
