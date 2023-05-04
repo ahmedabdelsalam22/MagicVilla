@@ -8,6 +8,7 @@ namespace MagicVilla_API.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [Required]
         public String Name { get; set; }
         public String Details { get; set; }
         public int Occupancy { get; set; }
