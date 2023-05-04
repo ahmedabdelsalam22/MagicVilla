@@ -56,6 +56,7 @@ namespace MagicVilla_web.Services
                         break;
                 }
                 HttpResponseMessage apiResponse = null;
+
                 apiResponse = await client.SendAsync(message);
 
                 var apiContent = await apiResponse.Content.ReadAsStringAsync();
