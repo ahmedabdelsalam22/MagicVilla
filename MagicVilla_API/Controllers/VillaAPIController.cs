@@ -126,7 +126,6 @@ namespace MagicVilla_API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-		[Authorize(Roles = "CUSTOM")]
 		public async Task<ActionResult<APIResponse>> DeleteVilla(int id)
         {
             try
