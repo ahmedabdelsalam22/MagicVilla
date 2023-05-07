@@ -5,6 +5,7 @@ using MagicVilla_API.Data;
 using MagicVilla_API.Repository;
 using MagicVilla_API.Repository.IRepository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
@@ -25,9 +26,15 @@ builder.Services.AddControllers(opt=>opt.ReturnHttpNotAcceptable=true)
     .AddNewtonsoftJson()
    .AddXmlDataContractSerializerFormatters();
 
+builder.Services.AddApiVersioning(options => {
+	options.AssumeDefaultVersionWhenUnspecified = true;
+	options.DefaultApiVersion = new ApiVersion(1,0);
+}); 
+
 builder.Services.AddScoped<IVillaRepository, VillaRepository>();
 builder.Services.AddScoped<IVillaNumberRepository, VillaNumberRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 
 var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");
 
