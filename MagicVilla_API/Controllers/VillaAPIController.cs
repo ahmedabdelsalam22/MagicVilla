@@ -13,9 +13,11 @@ using System.Net;
 
 namespace MagicVilla_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiversion}/[controller]")]
     [ApiController]
-    public class VillaAPIController : ControllerBase
+    [ApiVersion("1.0")]
+	[ApiVersion("2.0")]
+	public class VillaAPIController : ControllerBase
     {
         private readonly IVillaRepository _repository;
         private readonly IMapper _Mapper;
@@ -27,7 +29,9 @@ namespace MagicVilla_API.Controllers
             _response = new();
         }
 
+
         [HttpGet]
+        [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize]
         public async Task<ActionResult<APIResponse>> GetVillas()
@@ -47,6 +51,9 @@ namespace MagicVilla_API.Controllers
             }
             return _response;
         }
+
+
+
 		[Authorize]
 		[HttpGet("id", Name = "GetVilla")]
         [ProducesResponseType(StatusCodes.Status200OK)]
