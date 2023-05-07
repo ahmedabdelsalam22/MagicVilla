@@ -10,9 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
-namespace MagicVilla_API.Controllers
+namespace MagicVilla_API.Controllers.v2
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiversion}/[controller]")]
+    [ApiVersion("1.0")]
     [ApiController]
     public class VillaNumberAPIController : ControllerBase
     {
@@ -43,7 +44,7 @@ namespace MagicVilla_API.Controllers
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
-                _response.ErrorMessages = new List<String>() { ex.ToString() };
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
             }
             return _response;
         }
@@ -77,7 +78,7 @@ namespace MagicVilla_API.Controllers
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
-                _response.ErrorMessages = new List<String>() { ex.ToString() };
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
             }
             return _response;
         }
@@ -99,7 +100,7 @@ namespace MagicVilla_API.Controllers
                     return BadRequest(ModelState);
                 }
                 //Relation foreign key in VillaNumber and PrimaryKey in Villa
-                if (_villaRepo.GetAsync(u=>u.Id == createDto.VillaId) == null) 
+                if (_villaRepo.GetAsync(u => u.Id == createDto.VillaId) == null)
                 {
                     ModelState.AddModelError("customError", "VillaId Invalid");
                     return BadRequest(ModelState);
@@ -119,7 +120,7 @@ namespace MagicVilla_API.Controllers
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
-                _response.ErrorMessages = new List<String>() { ex.ToString() };
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
             }
             return _response;
 
@@ -150,7 +151,7 @@ namespace MagicVilla_API.Controllers
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
-                _response.ErrorMessages = new List<String>() { ex.ToString() };
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
             }
             return _response;
         }
@@ -183,11 +184,11 @@ namespace MagicVilla_API.Controllers
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
-                _response.ErrorMessages = new List<String>() { ex.ToString() };
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
             }
             return _response;
         }
 
-        
+
     }
 }
