@@ -9,7 +9,6 @@ namespace MagicVilla_API.Controllers
 {
 	[Route("api/v{version:apiversion}/[controller]")]
 	[ApiVersion("1.0")]
-	[ApiVersion("2.0")]
 	[ApiController]
 	public class UsersController : ControllerBase
 	{
