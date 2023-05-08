@@ -6,6 +6,6 @@ namespace MagicVilla_web.Services.IServices
 	public interface IAuthService
 	{
 		Task<T> LoginAsync<T>(LoginRequestDTO obj);
-		Task<T> RegisterAsync<T>(UserDto obj);
+		Task<T> RegisterAsync<T>(RegisterationRequestDTO obj);
 	}
 }
