@@ -20,6 +20,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(connectionString: connectionString));
 
+builder.Services.AddResponseCaching();
+
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 
 builder.Services.AddControllers(opt=>opt.ReturnHttpNotAcceptable=true)
