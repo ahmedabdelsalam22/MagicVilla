@@ -2,6 +2,7 @@
 using MagicVilla_web.Models;
 using MagicVilla_web.Services.IServices;
 using MagicVilla_Web.Models.Dtos;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -63,8 +64,10 @@ namespace MagicVilla_web.Controllers
 
 		public async Task<IActionResult> Logout()
 		{
-			return View();
-		}
+		    await HttpContext.SignOutAsync();
+			HttpContext.Session.SetString(SD.SessionToken, "");
+            return RedirectToAction("Index", "Home");
+        }
 
 		public IActionResult AccessDenied() 
 		{
