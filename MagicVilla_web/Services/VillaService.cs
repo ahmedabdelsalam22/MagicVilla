@@ -15,46 +15,51 @@ namespace MagicVilla_web.Services
             villlaUrl = configuration.GetValue<String>("ServiceUrls:VillaAPI");
         }
 
-        public Task<T> GetAllAsync<T>()
+        public Task<T> GetAllAsync<T>(string token)
         {
             return SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.GET,
                 Url = villlaUrl + "/api/v1/villaAPI",
+                Token = token
             });
         }
-        public Task<T> GetAsync<T>(int id)
+        public Task<T> GetAsync<T>(int id, string token)
         {
             return SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.GET,
                 Url = villlaUrl + "/api/v1/villaAPI/" + id,
+                Token = token
             });
         }
-        public Task<T> CreateAsync<T>(VillaCreateDto dto)
+        public Task<T> CreateAsync<T>(VillaCreateDto dto, string token)
         {
             return SendAsync<T>(new ApiRequest() 
             {
                 ApiType = SD.ApiType.POST,
                 Url = villlaUrl+ "/api/v1/villaAPI",
                 Data = dto,
+                Token = token
             });
         }
-        public Task<T> UpdateAsync<T>(VillaUpdateDto dto)
+        public Task<T> UpdateAsync<T>(VillaUpdateDto dto, string token)
         {
             return SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.PUT,
                 Url = villlaUrl + "/api/v1/villaAPI/" + dto.Id,
                 Data = dto,
+                Token = token
             });
         }
-        public Task<T> DeleteAsync<T>(int id)
+        public Task<T> DeleteAsync<T>(int id, string token)
         {
             return SendAsync<T>(new ApiRequest()
             {
                 ApiType = SD.ApiType.DELETE,
-                Url = villlaUrl + "/api/v1/VillaAPI/" + id,            
+                Url = villlaUrl + "/api/v1/VillaAPI/" + id,
+                Token = token
             });
         }
 
