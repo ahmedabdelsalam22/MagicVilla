@@ -67,6 +67,12 @@ builder.Services.AddAuthentication(x => {
 	};
 });
 
+builder.Services.AddControllers(opt => {
+	opt.CacheProfiles.Add("Default30", new CacheProfile() {
+	  Duration = 30,
+	});
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
